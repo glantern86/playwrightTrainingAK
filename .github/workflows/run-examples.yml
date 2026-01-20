@@ -13,7 +13,10 @@ jobs:
     
     steps:
       - name: Check out project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Change to app directory
+        run: cd app
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -21,18 +24,21 @@ jobs:
           node-version: 18
 
       - name: Clean install the project
+        working-directory: ./app
         run: npm ci
 
       - name: Install Playwright
+        working-directory: ./app
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npx playwright test tests/example.spec.ts tests/demo-todo-app.spec.ts
+        working-directory: ./app
+        run: npx playwright test ../tests/example.spec.ts ../tests/demo-todo-app.spec.ts
 
       - name: Upload Playwright report
-        uses: actions/upload-artifact@v4
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: playwright-report/
+          path: app/playwright-report/
           retention-days: 30
