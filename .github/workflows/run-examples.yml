@@ -1,4 +1,4 @@
-nname: Run the example tests
+name: Run the example tests
 
 on:
   push:
