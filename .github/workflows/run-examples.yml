@@ -1,4 +1,4 @@
-name: Run the example tests
+nname: Run the example tests
 
 on:
   push:
@@ -29,7 +29,8 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test tests/example.spec.ts tests/demo-todo-app.spec.ts
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
